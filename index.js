@@ -23,6 +23,7 @@ console.log(products);
 
 
 // create http 
+/*
 const http = require('http')
 const products = require('./list')
 
@@ -48,3 +49,38 @@ http.createServer((req, res) => {
 }).listen(3000, () => {
     console.log('http://localhost:3000')
 })
+*/
+
+
+
+// file system
+
+// read file (async)
+const fs = require('fs')
+
+fs.readFile('list.js', (error, data) => {
+    if (error) {
+        console.log(error)
+    } else {
+        console.log(data.toString())
+    }
+})
+
+
+// read file (sync)
+const dataList = fs.readFileSync('list.js', 'utf-8')
+console.log(dataList)
+
+
+// write file (async)
+const data = 'new text added ...'
+fs.writeFile('sample.txt', data, null, (err) => {
+    if (err) {
+        console.log(err)
+    } else {
+        console.log('write in file, Done !')
+    }
+})
+
+
+fs.writeFileSync('sample.txt', data)
