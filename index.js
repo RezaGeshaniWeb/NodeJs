@@ -125,3 +125,11 @@ if (checkExistFile) {
     console.log('not found file !');
 }
 */
+
+
+// create folder
+const fs = require('fs')
+
+fs.mkdir('newDir', { recursive: true }, err => {
+    if (err) console.log(err)
+})
