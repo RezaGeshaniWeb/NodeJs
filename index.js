@@ -128,8 +128,43 @@ if (checkExistFile) {
 
 
 // create folder
+/*
 const fs = require('fs')
+
+// mkdir
 
 fs.mkdir('newDir', { recursive: true }, err => {
     if (err) console.log(err)
 })
+
+fs.mkdir('newDir/innerDir', { recursive: true }, err => {
+    if (err) console.log(err)
+})
+
+
+const checkExistFolder = fs.existsSync('newDir/innerDir')
+
+if (checkExistFolder) {
+    console.log('exist')
+} else {
+    fs.mkdir('newDir/innerDir', err => {
+        if (err) console.log(err)
+    })
+}
+
+
+// mkdirSync
+fs.mkdirSync('newDir', { recursive: true })
+
+
+// readdir
+fs.readdir('./', (err, files) => {
+    console.log(files)
+})
+
+
+// rmdirSync
+fs.rmdirSync('newDir', { maxRetries: 3 })
+*/
+
+
