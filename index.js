@@ -54,7 +54,7 @@ http.createServer((req, res) => {
 
 
 // file system
-
+/*
 // read file (async)
 const fs = require('fs')
 
@@ -84,3 +84,44 @@ fs.writeFile('sample.txt', data, null, (err) => {
 
 
 fs.writeFileSync('sample.txt', data)
+*/
+
+
+/*
+// append to file (async)
+const data = 'the new text append to sample.txt'
+
+const fs = require('fs')
+
+fs.appendFile('sample.txt', data, 'utf-8', err => {
+    console.log(err)
+})
+
+
+// append to file (sync)
+fs.appendFileSync('sample.txt', data)
+*/
+
+
+// unlink (async)
+/*
+const fs = require('fs')
+
+fs.unlink('sample.txt', err => {
+    if (err) console.log(err)
+})
+
+
+// unlink (sync)
+fs.unlinkSync('sample.txt')
+
+
+// existSync
+const checkExistFile = fs.existsSync('sample.txt')
+
+if (checkExistFile) {
+    fs.unlinkSync('sample.txt')
+} else {
+    console.log('not found file !');
+}
+*/
