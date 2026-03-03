@@ -22,32 +22,23 @@ async function getById(req, res) {
 }
 
 async function create(req, res) {
-    let body = ''
+    try {
+        let body = ''
 
-    req.on('data', (chunk) => {
-        body += chunk.toString()
-    });
+        req.on('data', (chunk) => {
+            body += chunk.toString()
+        });
 
-    req.on('end', async () => {
-        try {
-            const productData = JSON.parse(body)
-
-            await ProductModel.create({
-                id: Date.now(),
-                name: productData.name || "محصول جدید",
-                price: productData.price || 1000000,
-                inStock: productData.inStock !== undefined ? productData.inStock : false,
-            });
-
+        req.on('end', async () => {
+            const product = { id: Date.now(), ...JSON.parse(body) }
+            const result = await ProductModel.create(product)
             res.writeHead(201, { "content-type": "application/json" })
-            res.write(JSON.stringify({ message: 'product created successfully!', receivedData: productData }))
+            res.write(JSON.stringify({ message: 'product created successfully!', receivedData: product }))
             res.end()
-        } catch (error) {
-            res.writeHead(400, { "content-type": "application/json" });
-            res.write(JSON.stringify({ message: 'Error processing request body or creating product' }));
-            res.end();
-        }
-    });
+        })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 const ProductController = { get, getById, create }
