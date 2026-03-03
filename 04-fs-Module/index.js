@@ -58,3 +58,29 @@ function removeSyncFile() {
     }
 }
 
+function createAsyncFolder() {
+    fs.mkdir('newFolder', { recursive: true }, err => {
+        if (err) console.log(err)
+    })
+}
+
+function createSyncFolder() {
+    const folderAddress = 'data/newFolder'
+    const checkExist = fs.existsSync(folderAddress)
+    if (checkExist) {
+        console.log('exist file.')
+    } else {
+        fs.mkdirSync(folderAddress, { recursive: true })
+    }
+}
+
+function readDir() {
+    fs.readdir('./', (err, file) => {
+        console.log(file)
+    })
+}
+
+function removeSyncFolder() {
+    fs.rmdirSync('data', { maxRetries: 3 })
+}
+
