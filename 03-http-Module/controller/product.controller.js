@@ -42,30 +42,53 @@ async function create(req, res) {
 }
 
 async function update(req, res) {
-    const id = req.url.split('/')[3]
+    try {
+        const id = req.url.split('/')[3]
 
-    let body = ''
+        let body = ''
 
-    req.on('data', (chunk) => {
-        body += chunk.toString()
-    })
+        req.on('data', (chunk) => {
+            body += chunk.toString()
+        })
 
-    req.on('end', async () => {
-        const parsedBody = { ...JSON.parse(body) }
-        const product = await ProductModel.getById(id)
+        req.on('end', async () => {
+            const parsedBody = { ...JSON.parse(body) }
+            const product = await ProductModel.getById(id)
+            if (!product) {
+                res.writeHead(404, { "content-type": "application/json" })
+                res.write(JSON.stringify({ message: 'product not found' }))
+                res.end()
+            } else {
+                const result = await ProductModel.update(id, parsedBody)
+                res.writeHead(200, { "content-type": "application/json" })
+                res.write(JSON.stringify({ message: 'product updated successfully!', receivedData: product }))
+                res.end()
+            }
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function remove(req, res) {
+    try {
+        const id = req.url.split('/')[3]
+        const product = await ProductModel.getById(Number(id))
         if (!product) {
             res.writeHead(404, { "content-type": "application/json" })
             res.write(JSON.stringify({ message: 'product not found' }))
             res.end()
         } else {
-            const result = await ProductModel.update(id, parsedBody)
+            const result = await ProductModel.remove(id)
             res.writeHead(200, { "content-type": "application/json" })
-            res.write(JSON.stringify({ message: 'product updated successfully!', receivedData: product }))
+            res.write(JSON.stringify({ message: 'product deleted successfully!' }))
             res.end()
         }
-    })
+    } catch (error) {
+        console.log(error)
+    }
 }
 
-const ProductController = { get, getById, create, update }
+const ProductController = { get, getById, create, update, remove }
 
 module.exports = ProductController
