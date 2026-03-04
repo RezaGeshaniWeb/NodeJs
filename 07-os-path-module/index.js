@@ -26,3 +26,20 @@ console.log(__filename)
 
 
 
+const os = require('os')
+
+const currentOS = {
+    name: os.type(),
+    arch: os.arch(),
+    platform: os.platform(),
+    release: os.release(),
+    version: os.version(),
+    uptime: os.uptime(),
+    userInfo: os.userInfo(),
+    totalmem: os.totalmem(),
+    freemem: os.freemem(),
+    cpus: os.cpus(),
+    networkInterfaces: os.networkInterfaces()
+}
+
+console.log(currentOS)
